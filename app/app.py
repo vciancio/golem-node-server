@@ -42,7 +42,7 @@ def stats_all():
     return {
         "timestamp" : current_time(),
         "hardware" : hardware_stats(),
-        "golem": golem(),
+        "info": golem(),
     }
 
 if __name__ == '__main__':
