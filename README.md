@@ -23,6 +23,8 @@ After this, you can run your containers like normal.
 docker run vciancio/golem-node-server:latest
 ~~~
 
+> Note default port is 5000
+
 ## Environment Variables
 | Variable | Description | Default |
 | -------- | ----------- | ------- |
