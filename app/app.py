@@ -12,6 +12,7 @@ def hardware_stats():
     return {
         "cpu": hardware.cpu(),
         "memory": hardware.memory(),
+        "isProcessingTask": hardware.isProcessingTask(),
     }
 
 def current_time():
