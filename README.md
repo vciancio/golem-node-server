@@ -15,7 +15,7 @@ GET /api/status
 Response:
 ~~~
 {
-    "golem": {
+    "info": {
         "name": "node-name",
         "network": "mainnet",
         "processedLastHour": "0",
