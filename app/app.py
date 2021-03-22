@@ -12,6 +12,7 @@ def hardware_stats():
     return {
         "cpu": hardware.cpu(),
         "memory": hardware.memory(),
+        "isProcessingTask": hardware.isProcessingTask(),
     }
 
 def current_time():
@@ -34,8 +35,8 @@ def golem():
         "subnet": status.subnet(),
         "processedTotal": status.processed_total(),
         "processedLastHour": status.processed_hour(),
+        "processingLastHour": status.processing_hour(),
     }
-
 
 @app.route('/api/status', methods=['GET'])
 def stats_all():

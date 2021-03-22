@@ -40,3 +40,6 @@ class GolemStatus:
 
     def processed_hour(self):
         return self._get_first_group(r'last 1h processed\s+(\d+)')
+
+    def processing_hour(self):
+        return self._get_first_group(r'last 1h in progress\s+(\d+)')
