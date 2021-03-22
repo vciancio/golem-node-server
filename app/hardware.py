@@ -1,17 +1,21 @@
 import psutil
-
+import subprocess as sp
+    
 def cpu():
+    # cpu_count = len(psutil.Process().cpu_affinity())
+    percent_usage = psutil.cpu_percent(interval=1)
     return {
-        "percentUsage": psutil.cpu_percent(),
-        "percentUsagePerCore": psutil.cpu_percent(percpu=True),
+        "percentUsage": round(percent_usage),
+        # "percentUsagePerCore": psutil.cpu_percent(percpu=True),
     }
 
 def memory():
-    mem = psutil.virtual_memory()
+    available = psutil.virtual_memory().available
+    used = psutil.virtual_memory().used
     return {
-        "available": mem.available,
-        "used": mem.used,
-        "percent" : mem.percent,
+        "available": available,
+        "used": used,
+        "percent" : round(used/(used+available), 1),
     }
 
 def isProcessingTask():
@@ -23,15 +27,8 @@ def isProcessingTask():
     return _isProcessRunning('vmrt')
 
 def _isProcessRunning(processName):
-    '''
-    Check if there is any running process that contains the given name processName.
-    '''
-    #Iterate over the all the running process
-    for proc in psutil.process_iter():
-        try:
-            # Check if process name contains the given name string.
-            if processName.lower() in proc.name().lower():
-                return True
-        except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
-            pass
-    return False
+    try:
+        sp.check_output("pidof '{}'".format(processName), shell=True)
+        return True
+    except sp.CalledProcessError:
+        return False

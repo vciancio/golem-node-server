@@ -69,13 +69,6 @@ Response:
     "hardware": {
         "cpu": {
             "percentUsage": 13.3,
-            "percentUsagePerCore": [
-                7.2,
-                10.3,
-                8.7,
-                9.3,
-                26,
-            ]
         },
         "memory": {
             "available": 32904065024,
