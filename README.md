@@ -55,6 +55,8 @@ Credit to [aabrioux/golem-node](https://hub.docker.com/r/aabrioux/golem-node) fo
 Unfortunately, as of now, Yagna v0.6.1, you can't just spin up the container right away. You have to hit the enter-key a couple of times setup the node. 
 
 ~~~
+// Ensures you've pulled the latest aabrioux/golem-node image. Important for Updating
+docker pull aabrioux/golem-node:latest 
 docker build -t vciancio/golem-node-server:latest .
 ./init.sh /path/to/where/you/want/to/mount/volumes
 ~~~
@@ -62,7 +64,7 @@ docker build -t vciancio/golem-node-server:latest .
 After this, you can run your containers like normal.
 
 ~~~
-docker run vciancio/golem-node-server:latest
+docker run -p 5000:5000 vciancio/golem-node-server:latest
 ~~~
 
 > Note default port is 5000
