@@ -27,7 +27,7 @@ class GolemStatus:
         return self._get_first_group(r'Node\sName\s+(\S+)')
 
     def version(self):
-        return self._get_first_group(r'Version\s+(\S+)')
+        return self._get_first_group(r'│\s+Version\s+(\S+)')
 
     def network(self):
         return self._get_first_group(r'network\s+\x1b\S+?m(\S+)\x1b')
