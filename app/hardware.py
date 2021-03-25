@@ -11,11 +11,20 @@ def cpu():
 
 def memory():
     available = psutil.virtual_memory().available
-    used = psutil.virtual_memory().used
+
+    try: 
+        used = sp.check_output(\
+            'cat /sys/fs/cgroup/memory/memory.usage_in_bytes', \
+            shell=True \
+        )
+        used = int(used)
+    except:
+        used = psutil.virtual_memory().used
+    
     return {
         "available": available,
         "used": used,
-        "percent" : round(used/(used+available), 1),
+        "percent" : round(used/(used+available) * 100),
     }
 
 def isProcessingTask():
