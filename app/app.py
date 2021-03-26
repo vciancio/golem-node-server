@@ -1,5 +1,5 @@
 from flask import Flask
-from golem import GolemStatus, get_status
+from golem import GolemStatus
 from flask_cors import CORS
 import hardware
 import sys
@@ -22,20 +22,15 @@ def current_time():
     return calendar.timegm(time.gmtime())
 
 def golem():
-    o = get_status()
-    # print(o, file=sys.stderr)
-    if o is None:
-        return None
-    status = GolemStatus(o)
+    status = GolemStatus()
     return {
         "name": status.node_name(),
         "version": status.version(),
-        "wallet": status.wallet(),
+        "wallet": status.account(),
         "network": status.network(),
         "subnet": status.subnet(),
         "processedTotal": status.processed_total(),
         "processedLastHour": status.processed_hour(),
-        "processingLastHour": status.processing_hour(),
     }
 
 @app.route('/api/status', methods=['GET'])
