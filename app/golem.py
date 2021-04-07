@@ -1,5 +1,6 @@
 import subprocess as sp
 import json
+import re
 
 class GolemStatus:
     
@@ -8,6 +9,7 @@ class GolemStatus:
         self._version = _get_version()
         self._config = _get_config()
         self._payment = _get_payment()
+        self.status = _get_golemsp_status()
 
     def account(self):
         return self._config["account"]
@@ -19,7 +21,8 @@ class GolemStatus:
         return self._version["current"]["version"]
         
     def network(self):
-        return self._payment["network"]
+        return self._get_first_group('network\s+\x1b\S+?m(\S+)\x1b')
+        # return self._payment["network"]
     
     def subnet(self):
         return self._config["subnet"]
@@ -33,6 +36,20 @@ class GolemStatus:
         if "Terminated" not in self._activity["last1h"]:
             return 0
         return self._activity["last1h"]["Terminated"]
+
+    def _get_first_group(self, regex):
+        matches = re.finditer(regex, self.status, re.MULTILINE)
+        for _, match in enumerate(matches, start=1):
+            for groupNum in range(0, len(match.groups())):
+                groupNum = groupNum + 1
+                return match.group(groupNum)
+        return None
+
+def _get_golemsp_status():
+    o = sp.check_output(["golemsp status"], shell=True).decode()
+    if "┌─────" not in o:
+        return None
+    return o
 
 def _run_return_json(command):
     raw = sp.check_output(command, shell=True)
