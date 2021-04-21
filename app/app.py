@@ -25,6 +25,7 @@ def golem():
     status = GolemStatus()
     return {
         "name": status.node_name(),
+        "id": status.id(),
         "version": status.version(),
         "wallet": status.account(),
         "network": status.network(),

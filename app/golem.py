@@ -9,7 +9,8 @@ class GolemStatus:
         self._version = _get_version()
         self._config = _get_config()
         self._payment = _get_payment()
-        self.status = _get_golemsp_status()
+        self._status = _get_golemsp_status()
+        self._appkey_list = _get_appkey_list()
 
     def account(self):
         return self._config["account"]
@@ -36,9 +37,20 @@ class GolemStatus:
         if "Terminated" not in self._activity["last1h"]:
             return 0
         return self._activity["last1h"]["Terminated"]
+    
+    def id(self):
+        headers = self._appkey_list["headers"]
+        index_name = headers.index("name")
+        index_id = headers.index("id")
+
+        data = self._appkey_list["values"]
+        for values in data:
+            if values[index_name] == "golem-cli":
+                return values[index_id]
+        return None
 
     def _get_first_group(self, regex):
-        matches = re.finditer(regex, self.status, re.MULTILINE)
+        matches = re.finditer(regex, self._status, re.MULTILINE)
         for _, match in enumerate(matches, start=1):
             for groupNum in range(0, len(match.groups())):
                 groupNum = groupNum + 1
@@ -152,3 +164,28 @@ def _get_payment():
     }
     '''
     return _run_return_json('yagna payment status --json')
+
+def _get_appkey_list():
+    '''
+    Command: yagna app-key list --json
+    JSON Returns:
+    {
+        "headers": [
+            "name",
+            "key",
+            "id",
+            "role",
+            "created"
+        ],
+        "values": [
+            [
+                "golem-cli",
+                "42f8ee51921641b0a698acb7ba3e3127",
+                "0x08d8cf128538b5cf5bb753480db35ed03e5261ff",
+                "manager",
+                "2021-03-17T03:24:33.801245867"
+            ]
+        ]
+    }
+    '''
+    return _run_return_json('yagna app-key list --json')
