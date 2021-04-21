@@ -1,4 +1,5 @@
-FROM aabrioux/golem-node:latest
+ARG YA_CORE_VERSION=v0.6.4
+FROM aabrioux/golem-node:${YA_CORE_VERSION}
 
 ENV SETTINGS_NODE_NAME=golem_node
 ENV SETTINGS_CORES=2
