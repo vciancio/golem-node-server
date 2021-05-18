@@ -30,9 +30,6 @@ class GolemStatus:
     def subnet(self):
         return self._config["subnet"]
 
-    def active_profile(self):
-        return self._active_profile
-
     def cpu_threads(self):
         return self._profile[self._profile_name]["cpu_threads"]
 
