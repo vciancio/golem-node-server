@@ -8,8 +8,7 @@ app = Flask(__name__)
 
 CORS(app, resources=r'/api/*')
 
-def hardware_stats():
-    status = GolemStatus()
+def hardware_stats(status):
     return {
         "cpu": hardware.cpu(),
         "memory": hardware.memory(),
@@ -27,8 +26,7 @@ def current_time():
     import time
     return calendar.timegm(time.gmtime())
 
-def golem():
-    status = GolemStatus()
+def golem(status):
     return {
         "name": status.node_name(),
         "id": status.id(),
@@ -42,10 +40,11 @@ def golem():
 
 @app.route('/api/status', methods=['GET'])
 def stats_all():
+    golem_status = GolemStatus()
     return {
         "timestamp" : current_time(),
-        "hardware" : hardware_stats(),
-        "info": golem(),
+        "hardware" : hardware_stats(golem_status),
+        "info": golem(golem_status),
     }
 
 if __name__ == '__main__':
