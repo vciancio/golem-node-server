@@ -9,10 +9,16 @@ app = Flask(__name__)
 CORS(app, resources=r'/api/*')
 
 def hardware_stats():
+    status = GolemStatus()
     return {
         "cpu": hardware.cpu(),
         "memory": hardware.memory(),
         "isProcessingTask": hardware.isProcessingTask(),
+        "shared": {
+            "cpu_threads": status.cpu_threads(),
+            "mem_gib": status.mem_gib(),
+            "storage_gib": status.storage_gib(),
+        }
     }
 
 def current_time():
@@ -32,11 +38,6 @@ def golem():
         "subnet": status.subnet(),
         "processedTotal": status.processed_total(),
         "processedLastHour": status.processed_hour(),
-        "sharedHardware": {
-            "cpu_threads": status.cpu_threads(),
-            "mem_gib": status.mem_gib(),
-            "storage_gib": status.storage_gib(),
-        }
     }
 
 @app.route('/api/status', methods=['GET'])
