@@ -11,6 +11,8 @@ class GolemStatus:
         self._payment = _get_payment()
         self._status = _get_golemsp_status()
         self._appkey_list = _get_appkey_list()
+        self._profile_name = _get_profile_name()
+        self._profile = _get_profile()
 
     def account(self):
         return self._config["account"]
@@ -27,6 +29,15 @@ class GolemStatus:
     
     def subnet(self):
         return self._config["subnet"]
+
+    def cpu_threads(self):
+        return self._profile[self._profile_name]["cpu_threads"]
+
+    def mem_gib(self):
+        return self._profile[self._profile_name]["mem_gib"]
+
+    def storage_gib(self):
+        return self._profile[self._profile_name]["storage_gib"]
 
     def processed_total(self):
         if "Terminated" not in self._activity["total"]:
@@ -104,6 +115,28 @@ def _get_config():
     }
     '''
     return _run_return_json('ya-provider config get --json')
+
+def _get_profile_name():
+    '''
+    Command: ya-provider profile active
+    Returns:
+    "default"
+    '''
+    return _run_return_json('ya-provider profile active')
+
+def _get_profile():
+    '''
+    Command: ya-provider profile list --json
+    Returns Json:
+    {
+      "default": {
+        "cpu_threads": 15,
+        "mem_gib": 30.0,
+        "storage_gib": 170.0
+      }
+    }
+    '''
+    return _run_return_json('ya-provider profile list --json')
 
 def _get_version():
     '''
