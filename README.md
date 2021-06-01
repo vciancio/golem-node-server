@@ -33,6 +33,11 @@ Response:
             "percent": 21.7,
             "used": 7579193344
         }
+        "shared": {
+            "cpu_threads":15,
+            "mem_gib":30.0,
+            "storage_gib":170.0
+        }
     },
     "timestamp": 1616311512
 }
