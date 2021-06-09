@@ -25,7 +25,7 @@ class GolemStatus:
 
     def update(self):
         if (self._version["pending"] == None):
-            return
+            return None
         else:
             return self._version["pending"]["version"]
         
