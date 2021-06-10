@@ -22,6 +22,12 @@ class GolemStatus:
 
     def version(self):
         return self._version["current"]["version"]
+
+    def update(self):
+        if (self._version["pending"] == None):
+            return None
+        else:
+            return self._version["pending"]["version"]
         
     def network(self):
         return self._get_first_group('network\s+\x1b\S+?m(\S+)\x1b')
