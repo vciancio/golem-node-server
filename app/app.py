@@ -31,6 +31,7 @@ def golem(status):
         "name": status.node_name(),
         "id": status.id(),
         "version": status.version(),
+        "update": status.update(),
         "wallet": status.account(),
         "network": status.network(),
         "subnet": status.subnet(),

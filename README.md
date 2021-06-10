@@ -21,6 +21,7 @@ Response:
         "processedLastHour": "0",
         "processedTotal": "100",
         "subnet": "public-beta",
+        "update": "0.6.7-beta.1",
         "version": "0.6.1",
         "wallet": "0x123456ff832..."
     },
