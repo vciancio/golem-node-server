@@ -70,7 +70,7 @@ docker build -t vciancio/golem-node-server:latest .
 After this, you can run your containers like normal.
 
 ~~~
-docker run -p 5000:5000 vciancio/golem-node-server:latest
+docker run -p 5000:5000 -e 'YA_ACCOUNT'='0x...' vciancio/golem-node-server:latest
 ~~~
 
 > Note default port is 5000
@@ -78,6 +78,7 @@ docker run -p 5000:5000 vciancio/golem-node-server:latest
 ### Environment Variables
 | Variable | Description | Default |
 | -------- | ----------- | ------- |
+|YA_ACCOUNT| Required: ETH wallet to store GLM payments in | 
 |SETTINGS_NODE_NAME| Name of your Node | golem_node
 |SETTINGS_CORES| # of cores you're allowing the node to use| 2
 |SETTINGS_MEMORY| Max memory node can use | 1.5Gib
@@ -87,7 +88,7 @@ docker run -p 5000:5000 vciancio/golem-node-server:latest
 |SETTINGS_PRICE_PER_CPU_HOUR| | 0.1
 |SETTINGS_SUBNET| Subnet you're using | public-beta
 |YA_PAYMENT_NETWORK| Network you're Using | mainnet
-|YA_ACCOUNT| ETH wallet to store GLM payments in | 
+
 
 ### Volumes to Mount
 
